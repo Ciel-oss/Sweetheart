@@ -1,6 +1,7 @@
 package com.sweetheart.android.logic.model
 
 import com.google.gson.annotations.SerializedName
+
 //本文件定义的类与属性按照搜索城市数据接口返回的JSON格式来定义
 data class PlaceResponse(val status:String,val places: List<Place>)
 
