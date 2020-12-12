@@ -16,9 +16,11 @@ import com.sweetheart.android.R
 import com.sweetheart.android.logic.model.Weather
 import com.sweetheart.android.logic.model.getSky
 import kotlinx.android.synthetic.main.activity_weather.*
+import kotlinx.android.synthetic.main.astro.*
 import kotlinx.android.synthetic.main.forecast.*
 import kotlinx.android.synthetic.main.life_index.*
 import kotlinx.android.synthetic.main.now.*
+import kotlinx.android.synthetic.main.professional_data.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -64,8 +66,10 @@ class WeatherActivity : AppCompatActivity() {
         //填充now.xml布局中的数据
         val currentTempText = "${realtime.temperature.toInt()} ℃"
         currentTemp.text = currentTempText
+        val currentApparentTempText = "体感温度 ${realtime.apparent_temperature.toInt()} ℃"
+        currentApparentTemp.text = currentApparentTempText
         currentSky.text = getSky(realtime.skycon).info
-        val currentPM25Text = "空气指数 ${realtime.airQuality.aqi.chn.toInt()}"
+        val currentPM25Text = "空气指数 ${realtime.airQuality.aqi.chn.toInt()} ${realtime.airQuality.description.chn}"
         currentAQI.text = currentPM25Text
         nowLayout.setBackgroundResource(getSky(realtime.skycon).bg)
         //填充forecast.xml布局中的数据
@@ -88,12 +92,29 @@ class WeatherActivity : AppCompatActivity() {
             temperatureInfo.text = tempText
             forecastLayout.addView(view)
         }
+        //填充professional_data.xml布局中的数据
+        val pressure = "${daily.pressure[0].avg.toInt()/100} 百帕"
+        pressureText.text = pressure
+        val cloudrate = "${(daily.cloudrate[0].avg*100).toInt()}%"
+        cloudrateText.text = cloudrate
+        val visibility = "${daily.visibility[0].avg} 公里"
+        visibilityText.text = visibility
+        val humidity = "${(daily.humidity[0].avg*100).toInt()}%"
+        humidityText.text = humidity
+        val precipitation = "${daily.precipitation[0].avg.toInt()} mm/h"
+        precipitationText.text = precipitation
+        val dswrf = "${daily.dswrf[0].avg} W/㎡"
+        dswrfText.text = dswrf
         //填充life_index.xml布局中的数据
         val lifeIndex = daily.lifeIndex
         coldRiskText.text = lifeIndex.coldRisk[0].desc
         dressingText.text = lifeIndex.dressing[0].desc
         ultravioletText.text = lifeIndex.ultraviolet[0].desc
         carWashingText.text = lifeIndex.carWashing[0].desc
+        //填充astro.xml布局中的数据
+        sunriseText.text = daily.astro[0].sunrise.time
+        sunsetText.text = daily.astro[0].sunset.time
+
         weatherLayout.visibility = View.VISIBLE
     }
 
