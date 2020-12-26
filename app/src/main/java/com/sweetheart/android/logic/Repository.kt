@@ -17,7 +17,9 @@ import kotlin.coroutines.CoroutineContext
 
 object Repository {
 
-  var mPlaceDao=  AppDataBase.instance.getPlaceDao();
+    var mPlaceDao=  AppDataBase.instance.getPlaceDao()
+
+    //线程参数类型指定成了Dispatchers.IO，这样代码块中的所有代码就都运行在子线程中了
     fun searchPlaces(query:String)= fire(Dispatchers.IO){
 
         val placeResponse=SweetHeartNetwork.searchPlaces(query)
@@ -81,6 +83,7 @@ object Repository {
             mPlaceDao.insert(localPlace)
         }
     }
+
     fun savePlace(place: LocalPlace) {
         var localPlace = mPlaceDao.getPlace(place.lat!!, place.lng!!)
         if (localPlace != null) {
@@ -99,8 +102,7 @@ object Repository {
     }
 
     fun getSavedPlaces() = mPlaceDao.getPlaces()
+
     fun deletePlace(place: LocalPlace)= mPlaceDao.delete(place)
-
-
 
 }

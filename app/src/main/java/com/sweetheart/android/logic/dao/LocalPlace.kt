@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
+//创建一个需要映射的实体类，用@Entity进行注解
 @Entity(tableName = "PlaceDao")
 data class LocalPlace(
 

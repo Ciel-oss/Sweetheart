@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -42,8 +41,8 @@ class WeatherActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.TRANSPARENT
         }
-
         setContentView(R.layout.activity_weather)
+
         if (viewModel.locationLng.isEmpty()) {
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
         }
@@ -70,7 +69,7 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         navBtn.setOnClickListener {
-            var fragment = supportFragmentManager.findFragmentById(R.id.placeFragment)
+            val fragment = supportFragmentManager.findFragmentById(R.id.placeFragment)
             if (fragment != null && fragment is PlaceFragment) {
                 fragment.updateList()
             }

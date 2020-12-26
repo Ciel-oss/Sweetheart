@@ -10,4 +10,5 @@ import retrofit2.http.Query
 interface PlaceService {
     @GET("v2/place?token=${SweetHeartApplication.TOKEN}&lang=zh_CN")
     fun searchPlaces(@Query("query") query:String): Call<PlaceResponse>
+    //返回值申明为Call<PlaceResponse>，则该接口就会将服务器返回的JSON数据自动解析成PlaceResponse对象
 }

@@ -9,10 +9,10 @@ import com.sweetheart.android.logic.model.Place
 
 class PlaceViewModel:ViewModel() {
 
-    private val searchLiveData=MutableLiveData<String>()
-
+    //对界面上显示的城市数据进行缓存
     val placeList=ArrayList<Place>()
-    val localPlaceList=ArrayList<LocalPlace>()
+
+    private val searchLiveData=MutableLiveData<String>()
 
     val placeLiveData=Transformations.switchMap(searchLiveData){query->
         Repository.searchPlaces(query)
@@ -21,6 +21,8 @@ class PlaceViewModel:ViewModel() {
     fun searchPlaces(query:String){
         searchLiveData.value=query
     }
+
+    val localPlaceList=ArrayList<LocalPlace>()
 
     fun savePlace(place: Place) = Repository.savePlace(place)
     fun savePlace(place: LocalPlace) = Repository.savePlace(place)

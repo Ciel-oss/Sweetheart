@@ -26,8 +26,8 @@ class HistoryAdapter(private val fragment: PlaceFragment, private val placeList:
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.history_item, parent, false)
-        //获取当前点击项的经纬度坐标和地区名称，并把它们传入Intent中
         val holder = ViewHolder(view)
+        //给history_item.xml的最外层布局注册一个长按事件监听器
         holder.itemView.setOnLongClickListener {
             if (placeList.size <= 1) {
                 Toast.makeText(it.context, "只有一个城市不能删除", Toast.LENGTH_LONG).show()
@@ -35,7 +35,7 @@ class HistoryAdapter(private val fragment: PlaceFragment, private val placeList:
                 val position = holder.adapterPosition
                 val place = placeList[position]
                 val activity = fragment.activity
-                var dialog = AlertDialog.Builder(it.context)
+                val dialog = AlertDialog.Builder(it.context)
                     .setTitle("提示")
                     .setMessage("是否删除" + place.name + "?")
                     .setNegativeButton(
@@ -64,6 +64,8 @@ class HistoryAdapter(private val fragment: PlaceFragment, private val placeList:
 
             false
         }
+
+        //给history_item.xml的最外层布局注册一个点击事件监听器
         holder.itemView.setOnClickListener {
             val position = holder.adapterPosition
             val place = placeList[position]
@@ -95,7 +97,6 @@ class HistoryAdapter(private val fragment: PlaceFragment, private val placeList:
     }
 
     override fun getItemCount(): Int {
-        Log.d("jcy-TAG", "getItemCount: " + placeList.size)
         return placeList.size
     }
 

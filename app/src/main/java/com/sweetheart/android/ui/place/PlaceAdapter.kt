@@ -12,7 +12,9 @@ import com.sweetheart.android.logic.model.Place
 import com.sweetheart.android.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.activity_weather.*
 
-class PlaceAdapter(private val fragment: PlaceFragment,private val placeList: List<Place>) :RecyclerView.Adapter<PlaceAdapter.ViewHolder>(){
+//RecyclerView的适配器
+class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: List<Place>) :
+        RecyclerView.Adapter<PlaceAdapter.ViewHolder>(){
 
     inner class ViewHolder(view:View):RecyclerView.ViewHolder(view){
         val placeName:TextView=view.findViewById(R.id.placeName)
@@ -21,19 +23,23 @@ class PlaceAdapter(private val fragment: PlaceFragment,private val placeList: Li
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view=LayoutInflater.from(parent.context).inflate(R.layout.place_item,parent,false)
-        //获取当前点击项的经纬度坐标和地区名称，并把它们传入Intent中
+        //给place_item.xml的最外层布局注册一个点击事件监听器
         val holder = ViewHolder(view)
         holder.itemView.setOnClickListener {
             val position = holder.adapterPosition
             val place = placeList[position]
+            //对PlaceFragment所处的Activity进行判断
             val activity = fragment.activity
             if (activity is WeatherActivity){
+                //关闭滑动菜单
                 activity.drawerLayout.closeDrawers()
+                //给WeatherViewModel赋值新的经纬度坐标和地区名
                 activity.viewModel.locationLng = place.location.lng
                 activity.viewModel.locationLat = place.location.lat
                 activity.viewModel.placeName = place.name
                 activity.refreshWeather()
             }else if (activity is MainActivity){
+                //获取当前点击项的经纬度坐标和地区名称，并把它们传入Intent中
                 val intent = Intent(parent.context, WeatherActivity::class.java).apply {
                     putExtra("location_lng", place.location.lng)
                     putExtra("location_lat", place.location.lat)

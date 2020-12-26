@@ -1,9 +1,6 @@
 package com.sweetheart.android.logic.model
 
-import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 //本文件定义的类与属性按照搜索城市数据接口返回的JSON格式来定义
 data class PlaceResponse(val status: String, val places: List<Place>)
